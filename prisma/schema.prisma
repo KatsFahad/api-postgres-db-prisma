@@ -12,3 +12,14 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Author{
+  id Int @id @default(autoincrement())
+  name String @unique
+}
+
+model Quote{
+  id Int @id @default(autoincrement())
+  text String
+  category String
+}
