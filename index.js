@@ -2,7 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 
 const quotesRouter = require('./Routes/quotesRouter')
-const authorsRouter = require('./Routes/authorsRouter')
+ authorsRouter = require('./Routes/authorsRouter')
 
 
 const app = express()
@@ -15,7 +15,7 @@ app.get('/', (req,res)=>{
     res.send('<h2>Getting, creating Quotes and Authors <br> Using apis with Node and Express</h2> ')
 })
 
-app.use('/quotes', quotesRouter)
+// app.use('/quotes', quotesRouter)
 
 app.use('/authors', authorsRouter)
 
