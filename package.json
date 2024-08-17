@@ -18,5 +18,8 @@
   "homepage": "https://github.com/KatsFahad/quotes-api#readme",
   "dependencies": {
     "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
   }
 }
