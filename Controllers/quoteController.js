@@ -1,13 +1,26 @@
-const fs = require('fs')
+const {PrismaClient} = require('@prisma/client')
 
-const getQuotes = (req,res)=>{
-    fs.readFile('./Modules/quote.json', (err, data)=>{
-        if(err){
-            res.send('Failed to quotes')
-        }else{
-            res.json(JSON.parse(data))
+const prisma = new PrismaClient()
+
+const getAllQuotes = ('/', async(req, res) =>{
+    const quotes = await prisma.quote.findMany()
+    res.json(quotes)
+})
+
+const getQuoteById = ('/:id', async(req,res)=>{
+    const quote = await prisma.quote.findUnique({
+        where : {
+            id: parseInt(req.params.id)
         }
     })
-}
+    if(quote){
+        res.json(quote)
+    }else{
+        res.send('No quote with that id')
+    }
+})
 
-module.exports = getQuotes
+module.exports = {
+    getAllQuotes,
+    getQuoteById
+}

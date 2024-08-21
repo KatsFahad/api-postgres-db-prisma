@@ -6,7 +6,7 @@ authorsRouter.get('/', authorController.getAllAuthors)
 
 authorsRouter.post('/', authorController.createNewAuthor)
 
-authorsRouter.get('/', authorController.getAuthorById)
+authorsRouter.get('/:id', authorController.getAuthorById)
 
 authorsRouter.put('/', authorController.updateAuthorById)
 

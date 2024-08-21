@@ -4,41 +4,27 @@ const {PrismaClient} = require('@prisma/client')
 const prisma = new PrismaClient()
 
 const getAllAuthors = ('/', async(req,res)=>{
-    const authors = await prisma.author.findMany()  
+    const authors = await prisma.author.findMany()
     res.json(authors)
 })
 
-const createNewAuthor = ('/', (req,res)=>{
-    fs.readFile('./Modules/authors.json', 'utf8', (err, data)=>{
-        if(err){
-            res.send('Failed to authors')
-        }else{
-            fs.writeFile('./Modules/authors.json', JSON.stringify([...JSON.parse(data),req.body],null,2), (err)=>{
-                if(err){
-                    res.send('Failed to a Author')
-                }else{
-                    res.send('Author added Successfully')
-                }
-            })
-        }
-    })
+const createNewAuthor = ('/', async(req,res)=>{
+    // const newAuthor = await prisma.author.create(
+    //     req.body
+    // )
 })
 
-const getAuthorById = ('/:id', (req,res)=>{
-    fs.readFile('./Modules/authors.json', 'utf8', (err, data)=>{
-        if(err){
-            res.send('Failed to get Author Data')
-        }else{
-            const authors = JSON.parse(data)
-            const author = authors.find(a=> a.id === parseInt(req.params.id))
-            if(author){
-                res.json(author)
-            }else{
-                res.send('No Author for that id for found')
-            }
-        }
-
-    })
+const getAuthorById = ('/:id', async(req,res)=>{
+    const author = await prisma.author.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        }}
+    )
+    if(author){
+        res.json(author)
+    }else{
+        res.send('No author with that id')
+    }
 })
 
 const deleteAuthorById = ('/:id', (req,res)=>{

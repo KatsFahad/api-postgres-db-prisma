@@ -12,14 +12,14 @@ app.use(morgan('dev'))
 app.use(express.json())
 
 app.get('/', (req,res)=>{
-    res.send('<h2>Getting, creating Quotes and Authors <br> Using apis with Node and Express</h2> ')
+    res.send('<h2>Getting, creating Quotes and Authors <br> Using apis with Node and Express<br>With Prisma connecting to Postgres Database </h2> ')
 })
-
-// app.use('/quotes', quotesRouter)
 
 app.use('/authors', authorsRouter)
 
-const PORT = 4600
+app.use('/quotes', quotesRouter)
+
+const PORT = 4700
 
 app.listen(PORT, ()=>{
     console.log(`Listening on port http://localhost:${PORT}`)
