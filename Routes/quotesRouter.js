@@ -5,23 +5,10 @@ const quoteController = require('../Controllers/quoteController')
 
 quotesRouter.get('/', quoteController.getAllQuotes)
 
-quotesRouter.post('/', (req,res)=>{
-    fs.readFile('./Modules/quotes.json', 'utf8', (err, data)=>{
-        if(err){
-            res.send('Failed to quotes')
-        }else{
-            fs.writeFile('./Modules/quotes.json', JSON.stringify([...JSON.parse(data),req.body],null,2), (err)=>{
-                if(err){
-                    res.send('Failed to a Quote')
-                }else{
-                    res.send('Quote added Successfully')
-                }
-            })
-        }
-    })
-})
-
 quotesRouter.get('/:id', quoteController.getQuoteById)
+
+quotesRouter.post('/', quoteController.createNewQuote)
+
 
 quotesRouter.delete('/:id', (req,res)=>{
     fs.readFile('./Modules/quotes.json', 'utf8', (err, data)=>{

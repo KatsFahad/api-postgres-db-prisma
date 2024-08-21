@@ -1,26 +1,49 @@
-const {PrismaClient} = require('@prisma/client')
+const { PrismaClient } = require("@prisma/client");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const getAllQuotes = ('/', async(req, res) =>{
-    const quotes = await prisma.quote.findMany()
-    res.json(quotes)
-})
+const getAllQuotes =
+  ("/",
+  async (req, res) => {
+    const quotes = await prisma.quote.findMany();
+    res.json(quotes);
+  });
 
-const getQuoteById = ('/:id', async(req,res)=>{
-    const quote = await prisma.quote.findUnique({
-        where : {
-            id: parseInt(req.params.id)
-        }
-    })
-    if(quote){
-        res.json(quote)
-    }else{
-        res.send('No quote with that id')
-    }
-})
+const getQuoteById = async (req, res) => {
+  const quote = await prisma.quote.findUnique({
+    where: {
+      id: parseInt(req.params.id),
+    },
+  });
+  if (quote) {
+    res.json(quote);
+  } else {
+    res.send("No quote with that id");
+  }
+};
+
+const createNewQuote = async (req, res) => {
+  const { text, category, authorId } = req.body;
+  if(text, category, authorId){
+    const createQuote = await prisma.quote.create({
+        data: {
+          text,
+          category,
+          author: {
+            connect: {
+              id: authorId,
+            },
+          },
+        },
+      });
+      res.send('Quote created')
+  }else{
+    res.send('Failed to create Quote')
+  }
+};
 
 module.exports = {
-    getAllQuotes,
-    getQuoteById
-}
+  getAllQuotes,
+  getQuoteById,
+  createNewQuote,
+};

@@ -4,9 +4,11 @@ const authorController =  require("../Controllers/authorController.js");
 
 authorsRouter.get('/', authorController.getAllAuthors)
 
+authorsRouter.get('/:id', authorController.getAuthorById)
+
 authorsRouter.post('/', authorController.createNewAuthor)
 
-authorsRouter.get('/:id', authorController.getAuthorById)
+authorsRouter.delete('/:id', authorController.deleteAuthorById)
 
 authorsRouter.put('/', authorController.updateAuthorById)
 
