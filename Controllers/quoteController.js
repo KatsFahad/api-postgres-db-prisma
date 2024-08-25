@@ -36,17 +36,12 @@ const deleteQuoteById = async (req, res) => {
 };
 
 const createNewQuote = async (req, res) => {
-    const { text, category, authorId } = req.body;
-    if(text, category, authorId){
+    const { text, category } = req.body;
+    if(text, category){
       const createQuote = await prisma.quote.create({
           data: {
             text,
-            category,
-            author: {
-              connect: {
-                id: authorId,
-              },
-            },
+            category
           },
         });
         res.send('Quote created')
