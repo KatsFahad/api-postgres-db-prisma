@@ -10,18 +10,7 @@ quotesRouter.get('/:id', quoteController.getQuoteById)
 quotesRouter.post('/', quoteController.createNewQuote)
 
 
-quotesRouter.delete('/:id', (req,res)=>{
-    fs.readFile('./Modules/quotes.json', 'utf8', (err, data)=>{
-        if(err){
-            res.send('Failed to get Quote Data')
-        }else{
-            const quotes = JSON.parse(data)
-            const updatedQuotes = quotes.filter(q => q.id !== req.params.id);
-            res.send('Quote deleted')
-        }
-    })
-    
-})
+quotesRouter.delete('/:id', quoteController.deleteQuoteById)
 
 quotesRouter.put('/:id', (req, res)=>{
     fs.readFile('./Modules/quotes.json', 'utf8', (err, data)=>{

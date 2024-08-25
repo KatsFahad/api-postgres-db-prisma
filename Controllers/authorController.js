@@ -39,7 +39,16 @@ const createNewAuthor = async (req, res) => {
 };
 
 const deleteAuthorById = async(req, res) =>{
-    
+    const deleteAuthor = await prisma.author.delete({
+        where: {
+            id: parseInt(req.params.id)
+        }
+    })
+    if(deleteAuthor){
+        res.send('Author deleted')
+    }else{
+        res.send('Failed to delete author')
+    }
 }
 
 const updateAuthorById =

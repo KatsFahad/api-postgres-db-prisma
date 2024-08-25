@@ -22,28 +22,42 @@ const getQuoteById = async (req, res) => {
   }
 };
 
+const deleteQuoteById = async (req, res) => {
+  const quoteToDelete = await prisma.quote.delete({
+    where: {
+      id: +req.params.id,
+    },
+  });
+  if (quoteToDelete) {
+    res.send("Quote deleted");
+  } else {
+    res.send("Quote not deleted");
+  }
+};
+
 const createNewQuote = async (req, res) => {
-  const { text, category, authorId } = req.body;
-  if(text, category, authorId){
-    const createQuote = await prisma.quote.create({
-        data: {
-          text,
-          category,
-          author: {
-            connect: {
-              id: authorId,
+    const { text, category, authorId } = req.body;
+    if(text, category, authorId){
+      const createQuote = await prisma.quote.create({
+          data: {
+            text,
+            category,
+            author: {
+              connect: {
+                id: authorId,
+              },
             },
           },
-        },
-      });
-      res.send('Quote created')
-  }else{
-    res.send('Failed to create Quote')
-  }
+        });
+        res.send('Quote created')
+    }else{
+      res.send('Failed to create Quote')
+    }
 };
 
 module.exports = {
   getAllQuotes,
   getQuoteById,
   createNewQuote,
+  deleteQuoteById,
 };
