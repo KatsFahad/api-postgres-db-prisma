@@ -2,6 +2,6 @@
 # Using Node and Express for port and middleware
 
 Setup a prisma Schema for models of Quotes and Authors.
-Using a prisma studio to enter data.
+Using a prisma studio for displaying data in the browser.
 
 Using primsa to get records, a single record, post records, remove and update records.
