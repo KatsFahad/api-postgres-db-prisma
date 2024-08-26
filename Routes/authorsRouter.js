@@ -10,6 +10,6 @@ authorsRouter.post('/', authorController.createNewAuthor)
 
 authorsRouter.delete('/:id', authorController.deleteAuthorById)
 
-authorsRouter.put('/', authorController.updateAuthorById)
+authorsRouter.put('/:id', authorController.updateAuthorById)
 
 module.exports = authorsRouter

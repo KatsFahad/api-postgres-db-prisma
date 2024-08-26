@@ -7,7 +7,11 @@ const getAllAuthors =
   ("/",
   async (req, res) => {
     const authors = await prisma.author.findMany();
-    res.json(authors);
+    if(authors){
+        res.json(authors);
+    }else{
+        res.send('No authors found')
+    }
   });
 
 const getAuthorById = async (req, res) => {
@@ -53,27 +57,23 @@ const createNewAuthor = async (req, res) => {
 
 
 
-const updateAuthorById =
-  ("/:id",
-  (req, res) => {
-    fs.readFile("./Modules/authors.json", "utf8", (err, data) => {
-      if (err) {
-        res.send("Failed to get Author Data");
-      } else {
-        const authors = JSON.parse(data);
-        const UpdateAuthor = authors.find(
-          (q) => q.id === parseInt(req.params.id)
-        );
-        if (UpdateAuthor) {
-          UpdateAuthor.name = req.body.name;
-          console.log(UpdateAuthor);
-          res.json("Author updated");
-        } else {
-          res.send("No author for that id for found");
+const updateAuthorById =  async(req, res) => {
+    const {name} = req.body
+    const updateAuthor = await prisma.author.update({
+        where:{
+            id: +req.params.id
+        },
+        data: {
+            name
         }
-      }
-    });
-  });
+    })
+
+    if(updateAuthor){
+        res.send('Author updated')
+    }else{
+        res.send('Failed to update Author')
+    }
+  };
 
 module.exports = {
   getAllAuthors,

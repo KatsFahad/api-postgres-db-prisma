@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { updateAuthorById } = require("./authorController");
 
 const prisma = new PrismaClient();
 
@@ -6,7 +7,12 @@ const getAllQuotes =
   ("/",
   async (req, res) => {
     const quotes = await prisma.quote.findMany();
-    res.json(quotes);
+    if(quotes){
+        res.json(quotes);
+    }else{
+        res.send('No quotes found')
+    }
+    
   });
 
 const getQuoteById = async (req, res) => {
@@ -50,9 +56,28 @@ const createNewQuote = async (req, res) => {
     }
 };
 
+const updateQuoteById = async(req, res) =>{
+    const {text, category} = req.body
+    const updateQuote = await prisma.quote.update({
+        where: {
+            id: +req.params.id
+        },
+        data: {
+            text,
+            category
+        }
+    })
+    if(updateQuote){
+        res.send('Quote updated')
+    }else{
+        res.send('Failed to update quote')
+    }
+}
+
 module.exports = {
   getAllQuotes,
   getQuoteById,
   createNewQuote,
   deleteQuoteById,
+  updateQuoteById
 };
