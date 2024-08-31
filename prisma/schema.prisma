@@ -13,6 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       Int    @default(autoincrement())
+  username String @unique
+  password String
+  email    String @unique
+  role Role @default(superAdmin)
+}
+
 model Author {
   id    Int     @id @default(autoincrement())
   name  String  @unique
@@ -20,9 +28,15 @@ model Author {
 }
 
 model Quote {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   text     String
   category String
   author   Author? @relation(fields: [authorId], references: [id])
   authorId Int?
+}
+
+enum Role {
+  superAdmin
+  subscriber
+  editor
 }

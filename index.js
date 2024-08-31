@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 
 const quotesRouter = require('./Routes/quotesRouter')
+const { userRouter } = require('./Routes/userRouter')
  authorsRouter = require('./Routes/authorsRouter')
 
 
@@ -18,6 +19,8 @@ app.get('/', (req,res)=>{
 app.use('/authors', authorsRouter)
 
 app.use('/quotes', quotesRouter)
+
+app.use('/users', userRouter)
 
 const PORT = 4700
 
